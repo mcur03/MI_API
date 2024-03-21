@@ -21,15 +21,15 @@ exports.getEstudianteById = (req, res) => {
 
 // Crear un nuevo producto
 exports.createEstudiante = (req, res) => {
-  const { id, nombre, edad } = req.body;
+  const { nombre, edad, cel} = req.body;
 
   // Validación de datos
-  if (!id || !nombre || !edad) {
-    return res.status(400).json({ error: 'Se requieren todos los campos: id, nombre y edad.' });
+  if (!nombre || !edad || !cel) {
+    return res.status(400).json({ error: 'Se requieren todos los campos: nombre, edad y celular.' });
   }
 
-  const query = 'INSERT INTO students (id, nombre, edad) VALUES (?, ?, ?)';
-  connection.query(query, [id, nombre, edad], (err, result) => {
+  const query = 'INSERT INTO students (nombre, edad, cel) VALUES (?, ?, ?)';
+  connection.query(query, [nombre, edad, cel], (err, result) => {
     if (err) {
       // Manejo de errores
       console.error('Error al agregar estudiante:', err);
@@ -43,10 +43,10 @@ exports.createEstudiante = (req, res) => {
 
 // Actualizar un producto por ID
 exports.updateEstudiante = (req, res) => {
-  const iD = req.params.id;
-  const { id, nombre, edad } = req.body;
-  const query = 'UPDATE students SET id = ?, nombre = ?, edad = ? WHERE id = ?';
-  connection.query(query, [id, nombre, edad, iD], (err, result) => {
+  const id = req.params.id;
+  const { nombre, edad, cel } = req.body;
+  const query = 'UPDATE students SET nombre = ?, edad = ?, edad = ? WHERE id = ?';
+  connection.query(query, [nombre, edad, cel, id], (err, result) => {
     if (err) throw err;
     res.json({ message: 'Estudiante actualizado exitosamente' });
   });
